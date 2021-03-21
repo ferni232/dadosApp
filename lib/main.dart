@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,38 +22,56 @@ class PaginaDados extends StatefulWidget {
 
 class _PaginaDadosState extends State<PaginaDados> {
   int numeroDado = 1;
-
+  int numeroDado2 = 2;
+  int jugador1 = 0;
+  int jugador2 = 0;
+  int i = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Image.asset('images/dice$numeroDado.png'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FloatingActionButton(
-              onPressed: () => cambiarDado(1),
-              child: Text(
-                '1',
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.black,
+            Column(
+              children: [
+                Text(
+                  'el jugador 1 tiene $jugador1 puntos',
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(
+                  'el jugador 2 tiene $jugador2 puntos',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
             ),
-            FloatingActionButton(
-              onPressed: () => cambiarDado(2),
-              child: Text(
-                '2',
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.black,
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Image.asset(
+              'images/dice$numeroDado.png',
+              width: 200,
+              height: 200,
             ),
-            FloatingActionButton(
-              onPressed: () => cambiarDado(3),
-              child: Text(
-                '3',
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.black,
+            Image.asset(
+              'images/dice$numeroDado2.png',
+              width: 200,
+              height: 200,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            RaisedButton(
+              onPressed: () => cambiarDado(),
+              // ButtonStyle(backgroundColor: Colors.red,),
+              //child: Text(
+              //'apreta para tirar los dados',
+              //style: TextStyle(color: Colors.red),
             ),
           ],
         ),
@@ -60,9 +79,19 @@ class _PaginaDadosState extends State<PaginaDados> {
     );
   }
 
-  cambiarDado(int numero) {
-    print("El numero apretado es: $numero");
-    numeroDado = numero;
+  cambiarDado() {
+    //print("El numero apretado es: ");
+    numeroDado = Random().nextInt(6) + 1;
+    numeroDado2 = Random().nextInt(6) + 1;
+    //print("El numero 1 apretado es:$numeroDado ");
+    //print("El numero apretado es: $numeroDado2");
+    i++;
+    if (i % 2 == 0) {
+      jugador1 = jugador1 + numeroDado + numeroDado2;
+    } else {
+      jugador2 = jugador2 + numeroDado + numeroDado2;
+    }
+
     setState(() {});
   }
 }
